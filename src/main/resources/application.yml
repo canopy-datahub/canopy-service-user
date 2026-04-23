@@ -96,7 +96,7 @@ logging:
 
 spring:
   config:
-    import: aws-secretsmanager:application_prod
+    import: aws-secretsmanager:${AWS_SECRET_NAME}
     activate:
       on-profile: prod
   cloud.aws.region.static: us-east-1
