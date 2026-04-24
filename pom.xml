@@ -8,11 +8,11 @@
     <version>3.2.5</version>
     <relativePath/>
   </parent>
-  <groupId>ex.org.project</groupId>
-  <artifactId>datahub-service-user</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
-  <name>DataHub User Service</name>
-  <description>DataHub User Service</description>
+  <groupId>org.canopyplatform</groupId>
+  <artifactId>canopy-service-user</artifactId>
+  <version>0.0.2-SNAPSHOT</version>
+  <name>Canopy DataHub User Service</name>
+  <description>Canopy DataHub User Service</description>
   <properties>
     <java.version>17</java.version>
     <spring.cloud.aws.version>3.1.1</spring.cloud.aws.version>
