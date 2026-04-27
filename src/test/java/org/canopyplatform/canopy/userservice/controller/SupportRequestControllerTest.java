@@ -11,7 +11,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import java.util.Collections;
 import java.util.List;
 
-import org.canopyplatform.canopy.userservice.auth.UserAuthService;
 import jakarta.servlet.http.Cookie;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -35,8 +34,6 @@ public class SupportRequestControllerTest {
     @Mock
     private SupportRequestService supportRequestService;
 
-    @Mock
-    private UserAuthService authService;
 
     @InjectMocks
     private SupportRequestController supportRequestController;

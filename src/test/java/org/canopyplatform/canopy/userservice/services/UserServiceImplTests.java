@@ -2,7 +2,6 @@ package org.canopyplatform.canopy.userservice.services;
 
 import org.canopyplatform.canopy.userservice.auth.AccessRole;
 import org.canopyplatform.canopy.userservice.auth.UserNotFoundException;
-import org.canopyplatform.canopy.userservice.auth.ras.AuthRasTracking;
 import org.canopyplatform.canopy.userservice.dto.*;
 import org.canopyplatform.canopy.userservice.entity.*;
 import org.canopyplatform.canopy.userservice.exception.*;
@@ -287,8 +286,6 @@ class UserServiceImplTests {
     void saveUserRegistrationForm_HappyPath() {
         Integer userId = null; // Anonymous registration
         String email = "test@bah.com";
-        AuthRasTracking rasTracking = new AuthRasTracking();
-        rasTracking.setEmail(email);
         UserRegistrationDTO dto = getUserRegistrationDto();
         User user = new User();
         user.setId(1);
@@ -314,8 +311,6 @@ class UserServiceImplTests {
     void saveUserRegistrationForm_InvalidReferrer() {
         Integer userId = null; // Anonymous registration
         String email = "test@bah.com";
-        AuthRasTracking rasTracking = new AuthRasTracking();
-        rasTracking.setEmail(email);
         UserRegistrationDTO dto = getUserRegistrationDto();
         var referrer = new ReferrerSelectionDTO();
         referrer.setReferrerId(1);
@@ -344,8 +339,6 @@ class UserServiceImplTests {
     void saveUserRegistrationForm_PreexistingAccount() {
         Integer userId = null; // Anonymous registration
         String email = "test@bah.com";
-        AuthRasTracking rasTracking = new AuthRasTracking();
-        rasTracking.setEmail(email);
         when(userRepository.existsByEmail(email))
                 .thenReturn(true);
         assertThrows(UserRegistrationFormException.class,
@@ -356,8 +349,6 @@ class UserServiceImplTests {
     void saveUserRegistrationForm_MissingRequiredFields() {
         Integer userId = null; // Anonymous registration
         String email = "test@bah.com";
-        AuthRasTracking rasTracking = new AuthRasTracking();
-        rasTracking.setEmail(email);
         UserRegistrationDTO dto = getUserRegistrationDto();
         dto.setEmail("");
 
@@ -371,8 +362,6 @@ class UserServiceImplTests {
     void saveUserRegistrationForm_InvalidInstitution() {
         Integer userId = null; // Anonymous registration
         String email = "test@bah.com";
-        AuthRasTracking rasTracking = new AuthRasTracking();
-        rasTracking.setEmail(email);
         UserRegistrationDTO dto = getUserRegistrationDto();
 
         when(userRepository.existsByEmail(email))
@@ -387,8 +376,6 @@ class UserServiceImplTests {
     void saveUserRegistrationForm_InvalidResearcherLevel() {
         Integer userId = null; // Anonymous registration
         String email = "test@bah.com";
-        AuthRasTracking rasTracking = new AuthRasTracking();
-        rasTracking.setEmail(email);
         UserRegistrationDTO dto = getUserRegistrationDto();
         User user = new User();
         user.setId(1);

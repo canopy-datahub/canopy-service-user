@@ -143,18 +143,6 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(responseDTO, status);
     }
 
-    @ExceptionHandler(RasException.class)
-    ResponseEntity<ExceptionResponseDTO> handleRasException(RasException e){
-        log.error(e.getMessage(), e);
-        HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
-        ExceptionResponseDTO responseDTO = new ExceptionResponseDTO(
-                "RAS Exception",
-                status.value(),
-                e.getMessage()
-        );
-        return new ResponseEntity<>(responseDTO, status);
-    }
-
     @ExceptionHandler(URISyntaxException.class)
     ResponseEntity<ExceptionResponseDTO> handleURISyntaxException(URISyntaxException e){
         log.error(e.getMessage(), e);
