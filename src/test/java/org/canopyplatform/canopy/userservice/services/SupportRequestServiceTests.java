@@ -15,7 +15,6 @@ import org.canopyplatform.canopy.userservice.mapper.SupportAssigneeMapper;
 import org.canopyplatform.canopy.userservice.mapper.SupportRequestMapper;
 import org.canopyplatform.canopy.userservice.mapper.SupportRequestMapperImpl;
 import org.canopyplatform.canopy.userservice.repository.*;
-import org.canopyplatform.canopy.userservice.repository.*;
 import org.canopyplatform.canopy.userservice.service.MessageService;
 import org.canopyplatform.canopy.userservice.service.SupportRequestServiceImpl;
 import org.canopyplatform.canopy.userservice.service.UserService;

@@ -5,7 +5,6 @@ import org.canopyplatform.canopy.userservice.auth.UserAuthorizationException;
 import org.canopyplatform.canopy.userservice.auth.UserNotFoundException;
 import org.canopyplatform.canopy.userservice.exception.*;
 import lombok.extern.slf4j.Slf4j;
-import org.canopyplatform.canopy.userservice.exception.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;

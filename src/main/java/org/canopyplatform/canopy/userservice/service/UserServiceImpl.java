@@ -11,10 +11,6 @@ import org.canopyplatform.canopy.userservice.entity.*;
 import org.canopyplatform.canopy.userservice.exception.*;
 import org.canopyplatform.canopy.userservice.repository.*;
 import lombok.extern.slf4j.Slf4j;
-import org.canopyplatform.canopy.userservice.dto.*;
-import org.canopyplatform.canopy.userservice.entity.*;
-import org.canopyplatform.canopy.userservice.exception.*;
-import org.canopyplatform.canopy.userservice.repository.*;
 import org.springframework.stereotype.Service;
 
 import org.canopyplatform.canopy.userservice.mapper.InstitutionMapper;

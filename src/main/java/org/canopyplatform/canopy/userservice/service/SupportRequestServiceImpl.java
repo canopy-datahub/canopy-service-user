@@ -11,7 +11,6 @@ import org.canopyplatform.canopy.userservice.auth.UserNotFoundException;
 import org.canopyplatform.canopy.userservice.dto.EmailRequest;
 import org.canopyplatform.canopy.userservice.dto.UserDTO;
 import org.canopyplatform.canopy.userservice.exception.*;
-import org.canopyplatform.canopy.userservice.exception.*;
 import org.canopyplatform.canopy.userservice.util.EmailRequestType;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.csv.CSVFormat;
