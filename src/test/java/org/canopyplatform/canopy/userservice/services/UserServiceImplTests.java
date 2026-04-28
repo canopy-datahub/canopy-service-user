@@ -339,20 +339,21 @@ class UserServiceImplTests {
     void saveUserRegistrationForm_PreexistingAccount() {
         Integer userId = null; // Anonymous registration
         String email = "test@bah.com";
+        UserRegistrationDTO dto = new UserRegistrationDTO();
+        dto.setEmail(email);
         when(userRepository.existsByEmail(email))
                 .thenReturn(true);
         assertThrows(UserRegistrationFormException.class,
-                     () -> userService.saveUserRegistrationForm(userId, new UserRegistrationDTO()));
+                     () -> userService.saveUserRegistrationForm(userId, dto));
     }
 
     @Test
     void saveUserRegistrationForm_MissingRequiredFields() {
         Integer userId = null; // Anonymous registration
-        String email = "test@bah.com";
         UserRegistrationDTO dto = getUserRegistrationDto();
         dto.setEmail("");
 
-        when(userRepository.existsByEmail(email))
+        when(userRepository.existsByEmail(anyString()))
                 .thenReturn(false);
         assertThrows(UserRegistrationFormException.class,
                      () -> userService.saveUserRegistrationForm(userId, dto));
