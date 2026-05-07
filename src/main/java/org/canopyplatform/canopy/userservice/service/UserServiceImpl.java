@@ -44,6 +44,14 @@ public class UserServiceImpl implements UserService {
 	private final LkupReferrerRepository lkupReferrerRepository;
 	private final UserReferrerRepository userReferrerRepository;
 
+	// Roles that exist in lkup_role but should no longer be assignable to users.
+	// The DB row, the AccessRole enum entry, and any controller @checkAuth(...) calls
+	// are intentionally left in place so the role can be resurrected by removing
+	// names from this set. Filtered both on the role-list endpoint (so the admin UI
+	// dropdown doesn't show them) and on the role-assignment lookup (backstop in
+	// case a hand-crafted PUT body bypasses the UI).
+	private static final Set<String> BLOCKED_ROLES = Set.of("Uploader");
+
 	public UserDTO getUserInfo(String emailAddress) throws UserNotFoundException {
 		User user = userRepository.findByEmail(emailAddress)
 				.orElseThrow(() -> new UserNotFoundException("Unable to find user with provided email"));
@@ -174,7 +182,9 @@ public class UserServiceImpl implements UserService {
 	}
 
 	public List<Role> getAllRoles(){
-		return lookupRoleRepository.findAll();
+		return lookupRoleRepository.findAll().stream()
+				.filter(role -> !BLOCKED_ROLES.contains(role.getName()))
+				.toList();
 	}
 
 	public List<String> getGeneralStatus() {
@@ -202,8 +212,17 @@ public class UserServiceImpl implements UserService {
 			throw new SubmitterCenterException("Provided Center field is blank.");
 		}
 
-		List<Role> roles = lookupRoleRepository.findAllByNameIn(userDTO.getRoles());
-		if(roles.size() != userDTO.getRoles().size()) {
+		// Strip blocked role names before the DB lookup. Defends against a hand-crafted
+		// PUT body trying to assign a role we've decided is no longer grantable, even
+		// though it still exists in lkup_role for reversibility.
+		List<String> requestedRoleNames = userDTO.getRoles().stream()
+				.filter(name -> !BLOCKED_ROLES.contains(name))
+				.toList();
+		if (requestedRoleNames.size() != userDTO.getRoles().size()) {
+			log.warn("Dropped blocked role names from update request. User ID: " + id);
+		}
+		List<Role> roles = lookupRoleRepository.findAllByNameIn(requestedRoleNames);
+		if (roles.size() != requestedRoleNames.size()) {
 			log.warn("Supplied roles list size differs from retrieved Roles list. User ID: " + id);
 		}
 
