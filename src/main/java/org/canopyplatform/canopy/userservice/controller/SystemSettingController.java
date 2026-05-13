@@ -1,8 +1,5 @@
 package org.canopyplatform.canopy.userservice.controller;
 
-import java.util.List;
-
-import org.canopyplatform.canopy.userservice.auth.AccessRole;
 import org.canopyplatform.canopy.userservice.auth.core.KeycloakAuthenticationService;
 import org.canopyplatform.canopy.userservice.dto.PublicSystemSettingsDTO;
 import org.canopyplatform.canopy.userservice.dto.TopBannerSettingDTO;
@@ -43,14 +40,14 @@ public class SystemSettingController {
 
     @GetMapping("/admin")
     public ResponseEntity<PublicSystemSettingsDTO> getAllSettings(@AuthenticationPrincipal Jwt jwt) {
-        authenticationService.checkAuth(jwt, List.of(AccessRole.ADMIN));
+        authenticationService.checkCapability(jwt, "system-settings.read");
         return ResponseEntity.ok(systemSettingService.getPublicSettings());
     }
 
     @PutMapping("/admin/top-banner")
     public ResponseEntity<TopBannerSettingDTO> updateTopBanner(@AuthenticationPrincipal Jwt jwt,
                                                                @RequestBody TopBannerSettingDTO dto) {
-        Integer userId = authenticationService.checkAuth(jwt, List.of(AccessRole.ADMIN));
+        Integer userId = authenticationService.checkCapability(jwt, "system-settings.update");
         return ResponseEntity.ok(systemSettingService.updateTopBanner(dto, userId));
     }
 }

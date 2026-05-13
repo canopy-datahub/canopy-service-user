@@ -3,7 +3,6 @@ package org.canopyplatform.canopy.userservice.controller;
 import java.util.List;
 
 import org.canopyplatform.canopy.userservice.auth.core.KeycloakAuthenticationService;
-import org.canopyplatform.canopy.userservice.auth.AccessRole;
 import org.canopyplatform.canopy.userservice.dto.*;
 import org.canopyplatform.canopy.userservice.entity.LkupCenter;
 import org.canopyplatform.canopy.userservice.entity.Role;
@@ -28,7 +27,7 @@ public class UserController {
   @GetMapping("/admin/user")
     public ResponseEntity<UserDTO> getUserInfo(@AuthenticationPrincipal Jwt jwt,
                                                @RequestParam String emailAddress) {
-    authenticationService.checkAuth(jwt, List.of(AccessRole.ADMIN));
+    authenticationService.checkCapability(jwt, "user.admin.read");
         UserDTO userDTO = userService.getUserInfo(emailAddress);
         return ResponseEntity.ok(userDTO);
     }
@@ -113,21 +112,21 @@ public class UserController {
     @GetMapping("/admin/users")
     public ResponseEntity<List<UserDTO>> getUsersByStatus(@AuthenticationPrincipal Jwt jwt,
                                                           @RequestParam(required = true) String status) {
-      authenticationService.checkAuth(jwt, List.of(AccessRole.ADMIN));
+      authenticationService.checkCapability(jwt, "user.admin.list");
         List<UserDTO> users = userService.getUsersByStatus(status);
         return ResponseEntity.ok(users);
     }
 
     @GetMapping("/admin/roles")
     public ResponseEntity<List<Role>> getAllRoles(@AuthenticationPrincipal Jwt jwt) {
-      authenticationService.checkAuth(jwt, List.of(AccessRole.ADMIN));
+      authenticationService.checkCapability(jwt, "user.admin.config");
         List<Role> userRoles = userService.getAllRoles();
         return ResponseEntity.ok(userRoles);
     }
 
     @GetMapping("/admin/general-statuses")
     public ResponseEntity<List<String>> getGeneralStatus(@AuthenticationPrincipal Jwt jwt) {
-      authenticationService.checkAuth(jwt, List.of(AccessRole.ADMIN));
+      authenticationService.checkCapability(jwt, "user.admin.config");
         List<String> generalStatuses = userService.getGeneralStatus();
         return ResponseEntity.ok(generalStatuses);
     }
@@ -135,14 +134,14 @@ public class UserController {
     @GetMapping("/admin/{id}")
     public ResponseEntity<UserDTO> getUserInfoById(@AuthenticationPrincipal Jwt jwt,
                                                    @PathVariable Integer id) {
-      authenticationService.checkAuth(jwt, List.of(AccessRole.ADMIN));
+      authenticationService.checkCapability(jwt, "user.admin.read");
         return ResponseEntity.ok(userService.getUserInfoById(id));
     }
 
     @PutMapping("/admin/update/{id}")
     public ResponseEntity<UserDTO> updateUserInfo(@AuthenticationPrincipal Jwt jwt,
                                                   @PathVariable Integer id, @RequestBody UserDTO userDTO) {
-      authenticationService.checkAuth(jwt, List.of(AccessRole.ADMIN));
+      authenticationService.checkCapability(jwt, "user.admin.update");
         UserDTO updatedUserInfo = userService.updateUserInfo(id, userDTO);
         return ResponseEntity.ok(updatedUserInfo);
     }
