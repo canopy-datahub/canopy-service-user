@@ -18,6 +18,15 @@ public class UserDTO {
 	private String email;
 	private String institution;
 	private List<String> roles;
+	/**
+	 * Effective capabilities — the flat union of capabilities granted by the
+	 * user's assigned roles (see role_capability). Populated by UserMapper.
+	 * Frontends should gate fine-grained authorization (button visibility,
+	 * page guards, conditional flows) on this field rather than on role
+	 * names, so the DB remains the single source of truth for what a user
+	 * can do.
+	 */
+	private List<String> capabilities;
 	private String sessionID;
 	private String jobTitle;
 	private String orcidId;
